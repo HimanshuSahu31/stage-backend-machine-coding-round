@@ -118,3 +118,10 @@ Good Luck!
 Feel free to reach out if you have any questions or need clarification on the requirements. We're looking forward to reviewing your submission and evaluating how you tackle this task!
 
 
+# Submission Notes
+
+1. Header value `x-auth-token` with the user id is required to access list related endpoints and user context is derived from this value.
+2. List endpoints have a parent path of `/user`
+
+
+

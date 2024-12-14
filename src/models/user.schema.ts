@@ -1,7 +1,8 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { Document } from 'mongoose';
 export type UserDocument = User & Document;
 import { genre } from '../constants/constants';
+import { ContentType } from 'src/enum/content-type.enum';
 
 @Schema()
 export class User {
@@ -43,8 +44,8 @@ export class User {
 
   @Prop([
     {
-      contentId: { type: String, required: true },
-      contentType: { type: String, enum: ['Movie', 'TVShow'], required: true },
+      contentId: { type: mongoose.Schema.Types.ObjectId, required: true, refPath: 'myList.contentType' },
+      contentType: { type: String, enum: ContentType, required: true },
     },
   ])
   myList: {
@@ -54,3 +55,5 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+export const UserSchemaModule = MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]);

@@ -18,4 +18,8 @@ export class MoviesService {
     const createdMovie = new this.movieModel(createMovieDto);
     return createdMovie.save();
   }
+
+  async findById(id: string): Promise<Movie> {
+    return this.movieModel.findById(id).exec();
+  }
 }

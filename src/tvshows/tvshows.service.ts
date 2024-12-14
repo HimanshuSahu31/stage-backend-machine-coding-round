@@ -21,4 +21,8 @@ export class TVShowsService {
     const createdTVShow = new this.tvShowModel(createTVShowDto);
     return createdTVShow.save();
   }
+
+  async findById(id: string): Promise<TVShow> {
+    return this.tvShowModel.findById(id).exec();
+  }
 }

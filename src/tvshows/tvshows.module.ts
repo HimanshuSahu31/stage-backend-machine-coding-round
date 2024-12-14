@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TVShowsService } from './tvshows.service';
 import { TVShowsController } from './tvshows.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { TVShow, TVShowSchema } from '../models/tvshow.schema';
+import { TVShowSchemaModule } from '../models/tvshow.schema';
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: TVShow.name, schema: TVShowSchema }]), // Register Movie model with Mongoose
+    TVShowSchemaModule
   ],
   controllers: [TVShowsController],
   providers: [TVShowsService],
+  exports: [TVShowsService],
 })
 export class TvshowsModule {}

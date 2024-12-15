@@ -34,4 +34,6 @@ export class Movie {
 
 export const MovieSchema = SchemaFactory.createForClass(Movie);
 
-export const MovieSchemaModule = MongooseModule.forFeature([{ name: Movie.name, schema: MovieSchema }]);
+export const MovieSchemaModule = MongooseModule.forFeature([
+  { name: Movie.name, schema: MovieSchema },
+]);

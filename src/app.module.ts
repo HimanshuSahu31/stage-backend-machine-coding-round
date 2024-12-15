@@ -11,7 +11,7 @@ import { UserModule } from './list/list.module';
     MoviesModule,
     TvshowsModule,
     UserModule,
-    SeedModule
+    SeedModule,
   ],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
 export enum ContentType {
-    Movie='Movie', TVShow='TVShow'
+  Movie = 'Movie',
+  TVShow = 'TVShow',
 }
-

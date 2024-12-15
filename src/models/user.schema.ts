@@ -44,7 +44,12 @@ export class User {
 
   @Prop([
     {
-      contentId: { type: mongoose.Schema.Types.ObjectId, required: true, refPath: 'myList.contentType' },
+      contentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        refPath: 'myList.contentType',
+        index: true,
+      },
       contentType: { type: String, enum: ContentType, required: true },
     },
   ])
@@ -56,4 +61,6 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-export const UserSchemaModule = MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]);
+export const UserSchemaModule = MongooseModule.forFeature([
+  { name: User.name, schema: UserSchema },
+]);

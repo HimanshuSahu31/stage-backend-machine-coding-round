@@ -7,16 +7,12 @@ import { MoviesModule } from 'src/movies/movies.module';
 import { TvshowsModule } from 'src/tvshows/tvshows.module';
 
 @Module({
-  imports: [
-    UserSchemaModule,
-    MoviesModule, TvshowsModule
-  ],
+  imports: [UserSchemaModule, MoviesModule, TvshowsModule],
   controllers: [UserController],
   providers: [UserService],
 })
-
 export class UserModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer.apply(AuthMiddleware).forRoutes(UserController);
-    }
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes(UserController);
+  }
 }

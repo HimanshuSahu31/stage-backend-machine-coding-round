@@ -15,4 +15,4 @@ export const genre = [
   'History',
 ];
 
-export const X_AUTH_TOKEN = "x-auth-token";
+export const X_AUTH_TOKEN = 'x-auth-token';

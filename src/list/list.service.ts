@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateListItemDto } from './dto/create-list-item.dto';
 import { ContentType } from 'src/enum/content-type.enum';
 import { User, UserDocument } from 'src/models/user.schema';
@@ -11,24 +11,39 @@ import { TVShow } from 'src/models/tvshow.schema';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>,private readonly moviesService: MoviesService, private readonly tvShowsService: TVShowsService) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private readonly moviesService: MoviesService,
+    private readonly tvShowsService: TVShowsService,
+  ) {}
 
   async addToList(userId: string, createListItemDto: CreateListItemDto) {
-    const content = await this.findContent(createListItemDto)
+    const content = await this.findContent(createListItemDto);
     if (!content) {
-      throw new NotFoundException('Content does not exist')
+      throw new NotFoundException('Content does not exist');
     }
 
-    this.userModel.updateOne({_id: userId, "myList.contentId": {$ne: createListItemDto.contentId}}, {$push: {myList: createListItemDto}}).exec();
+    this.userModel
+      .updateOne(
+        {
+          _id: userId,
+          'myList.contentId': { $ne: createListItemDto.contentId },
+        },
+        { $push: { myList: createListItemDto } },
+      )
+      .exec();
   }
 
   async removeFromList(userId: string, itemId: string) {
-    const res = await this.userModel.updateOne({_id: userId}, {$pull: {myList: {_id: itemId}}}).exec();
-    console.log(res)
-    if (!res.matchedCount) throw new NotFoundException('Item not found in List')
+    const res = await this.userModel
+      .updateOne({ _id: userId }, { $pull: { myList: { _id: itemId } } })
+      .exec();
+    console.log(res);
+    if (!res.matchedCount)
+      throw new NotFoundException('Item not found in List');
   }
 
-  async listMyItems(userId: string){
+  async listMyItems(userId: string) {
     return this.userModel.findById(userId).populate('myList.contentId').exec();
   }
 
@@ -36,7 +51,9 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
-  private async findContent(createListItemDto: CreateListItemDto): Promise<Movie | TVShow> {
+  private async findContent(
+    createListItemDto: CreateListItemDto,
+  ): Promise<Movie | TVShow> {
     if (createListItemDto.contentType === ContentType.Movie) {
       return this.moviesService.findById(createListItemDto.contentId);
     } else {

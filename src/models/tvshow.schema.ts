@@ -29,4 +29,6 @@ export class TVShow {
 
 export const TVShowSchema = SchemaFactory.createForClass(TVShow);
 
-export const TVShowSchemaModule = MongooseModule.forFeature([{ name: TVShow.name, schema: TVShowSchema }]);
+export const TVShowSchemaModule = MongooseModule.forFeature([
+  { name: TVShow.name, schema: TVShowSchema },
+]);
